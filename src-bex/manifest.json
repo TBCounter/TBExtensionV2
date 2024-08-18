@@ -14,9 +14,9 @@
   "host_permissions": ["https://totalbattle.com/*", "*://*/*"],
 
   "action": {
-    "default_popup": "www/index.html#/popup"
+    "default_popup": "www/index.html#/"
   },
-  
+
   "background": {
     "service_worker": "background.js"
   },

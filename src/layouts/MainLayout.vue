@@ -13,7 +13,7 @@
       <router-view />
     </q-page-container>
     <q-footer>
-      site
+      contact with developer: <a class="footer-link" href="https://t.me/Ivan5" target="_blank">@Ivan5</a>
     </q-footer>
   </q-layout>
 </template>
@@ -27,7 +27,10 @@ defineOptions({
 </script>
 <style lang="scss" scoped>
 .layout {
-  width: 300px;
+  min-width: 300px;
   height: 400px;
+}
+.footer-link{
+  color: white
 }
 </style>
