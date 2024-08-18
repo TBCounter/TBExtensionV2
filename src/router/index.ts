@@ -36,7 +36,10 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to) => {
     const jwt = useJWT();
     if ((!jwt.jwt || !jwt.isNotExpired()) && to.name !== 'login') {
+      jwt.logout()
       return { name: 'login' }
+    } else {
+      jwt.isAuthenticated = true
     }
 
   })

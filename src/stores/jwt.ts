@@ -3,10 +3,8 @@ import { loginPost, registerPost } from '../api';
 import { useUser } from './user';
 import { useStorage } from '@vueuse/core';
 import { ILoginCreds, Token } from '../types';
-import { useQuasar } from 'quasar';
 import { jwtDecode } from 'jwt-decode';
-
-const $q = useQuasar();
+import { Cookies } from 'quasar';
 
 export const useJWT = defineStore({
   id: 'jwt',
@@ -19,22 +17,25 @@ export const useJWT = defineStore({
   },
   actions: {
     setJWT(newToken: Token | undefined) {
+
       this.jwt = newToken?.token || '';
-      if (newToken?.token && $q) {
-        $q.cookies.set('jwt', newToken?.token, {
+      if (newToken?.token && Cookies) {
+        Cookies.set('jwt', newToken?.token, {
           path: '/',
           expires: 182,
           domain: process.env.CLIENT ? window.location.hostname : undefined,
         });
         this.isAuthenticated = true;
       }
-      if (!newToken?.token && $q) {
+      if (!newToken?.token && Cookies) {
+
         this.isAuthenticated = false;
-        $q.cookies.remove('jwt', {
+
+        Cookies.remove('jwt', {
           path: '/',
           domain: process.env.CLIENT ? window.location.hostname : undefined,
         });
-        $q.cookies.remove('jwt', {
+        Cookies.remove('jwt', {
           path: '/',
         });
       }
@@ -66,12 +67,12 @@ export const useJWT = defineStore({
       }
     },
     logout() {
+
       // it's better to use user logout
       this.setJWT(undefined);
     },
     isNotExpired() {
       try {
-
         return (jwtDecode(this.token).exp || 0) > (+new Date / 1000)
       }
       catch {
