@@ -15,5 +15,12 @@ export default {
     repeat: 'Repeat password',
     required: 'Field is required',
     dontMatch: 'Passswords don`t match'
+  },
+  account: {
+    new: 'Create new account',
+    newDescription: 'Collected chests will be stored on your account. Corresponds to the account in the game.',
+    name: 'Account name',
+    required: 'Field is required',
+    create: 'Create'
   }
 };

@@ -13,8 +13,8 @@
             v-model="password" type="password" :label="$t('login.password')"></q-input>
         </q-card-section>
         <q-card-section>
-          <q-btn type="submit" style="border-radius: 8px" color="dark" rounded size="md" label="Sign in" no-caps
-            class="full-width"></q-btn>
+          <q-btn type="submit" style="border-radius: 8px" color="dark" rounded size="md" :label="$t('login.signIn')"
+            no-caps class="full-width"></q-btn>
         </q-card-section>
       </q-form>
       <q-card-section class="text-center q-pt-none">
@@ -44,7 +44,7 @@
           ]" outlined class="q-mt-sm" v-model="passwordRepeat" type="password" :label="$t('login.repeat')"></q-input>
         </q-card-section>
         <q-card-section>
-          <q-btn style="border-radius: 8px" color="dark" rounded size="md" :label="$t('login.signIn')" no-caps
+          <q-btn style="border-radius: 8px" color="dark" rounded size="md" :label="$t('login.signUp')" no-caps
             class="full-width" type="submit"></q-btn>
         </q-card-section>
       </q-form>

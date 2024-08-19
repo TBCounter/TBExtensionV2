@@ -15,3 +15,7 @@ export function registerPost(payload: ILoginCreds) {
 export function getAccounts() {
   return api.get('/accounts/');
 }
+
+export function createAccountPost(name: string) {
+  return api.post('/accounts/', { name });
+}
