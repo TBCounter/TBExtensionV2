@@ -9,8 +9,8 @@
         <q-input dense outlined :rules="[(val: string) => !!val || $t('account.required')]" :label="$t('account.name')"
           v-model="name"></q-input>
         <q-card-section>
-          <q-btn type="submit" style="border-radius: 8px" color="dark" rounded size="md" :label="$t('account.create')" no-caps
-            class="full-width"></q-btn>
+          <q-btn type="submit" style="border-radius: 8px" color="dark" rounded size="md" :label="$t('account.create')"
+            no-caps class="full-width"></q-btn>
         </q-card-section>
       </q-form>
     </q-card>
@@ -19,9 +19,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { createAccountPost } from '../api'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 
 const name = ref()
-function createAccount() {
-  createAccountPost(name.value)
+async function createAccount() {
+  await createAccountPost(name.value).then(() => router.push({ name: 'home' }))
 }
 </script>

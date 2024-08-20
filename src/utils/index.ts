@@ -1,10 +1,6 @@
 import { ref } from 'vue';
+import { CookieData } from 'src/types';
 
-type CookieData = {
-  cookieyesID: string,
-  log_cookie: string,
-  PTBHSSID: string
-}
 
 export function useGrabCookies() {
   const currentTabID = ref();

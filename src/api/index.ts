@@ -1,5 +1,5 @@
 import { api } from 'src/boot/axios';
-import { ILoginCreds } from '../types'
+import { ILoginCreds, IStartCookiePayload } from '../types'
 
 
 export function loginPost(payload: ILoginCreds) {
@@ -18,4 +18,8 @@ export function getAccounts() {
 
 export function createAccountPost(name: string) {
   return api.post('/accounts/', { name });
+}
+
+export function runAccount(payload: IStartCookiePayload) {
+  return api.post('/accounts/cookie', payload)
 }

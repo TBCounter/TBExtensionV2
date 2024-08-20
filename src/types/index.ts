@@ -38,3 +38,14 @@ export interface ILoginCreds {
   email: string;
   password: string;
 }
+export type CookieData = {
+  cookieyesID: string,
+  log_cookie: string,
+  PTBHSSID: string
+}
+
+export interface IStartCookiePayload {
+  accountId: string,
+  cookie: CookieData,
+  url: string
+}
