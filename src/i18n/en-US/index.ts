@@ -3,6 +3,9 @@
 
 export default {
   contact: 'Contact with developer: ',
+  error: {
+    unknown: 'Something went wrong, please try later'
+  },
   login: {
     signIn: 'Sign in',
     signInDescription: 'Sign in below to access your account',
@@ -14,7 +17,9 @@ export default {
     password: 'Password',
     repeat: 'Repeat password',
     required: 'Field is required',
-    dontMatch: 'Passswords don`t match'
+    dontMatch: 'Passswords don`t match',
+    wrong: 'Wrong login or password',
+    success: 'You have been successfuly registered'
   },
   account: {
     new: 'Create new account',

@@ -68,6 +68,9 @@ import { watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const $q = useQuasar();
 const jwt = useJWT();
@@ -87,9 +90,11 @@ async function onSubmitLogin() {
       router.push('/');
     })
     .catch((error) => {
-      console.log(error.response.status);
-      if (error.response.status == 401) {
-        emailError.value = 'Wrong login or password';
+      console.log(error.response?.status);
+      if (error.response?.status == 401) {
+        emailError.value = t('login.wrong');
+      } else {
+        $q.notify({ message: t('error.unknown'), type: 'negative' })
       }
       return;
     });
@@ -100,12 +105,12 @@ async function onSubmitRegister() {
   await jwt.register({ password: password.value, email: email.value })
     .then(() => {
       isLogin.value = true;
-      $q.notify('You have been successfuly registered');
+      $q.notify(t('login.success'));
     })
     .catch((error) => {
-      console.log(error.response.status);
-      if (error.response.status == 401) {
-        emailError.value = 'Wrong login or password';
+      console.log(error.response?.status);
+      if (error.response?.status == 401) {
+        emailError.value = t('login.wrong');
       }
       return;
     });
