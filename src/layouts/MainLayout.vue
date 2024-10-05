@@ -6,7 +6,13 @@
           Total battle counter
         </q-toolbar-title>
 
-        <div>v2</div>
+        <div>v2&nbsp;</div>
+        <div>
+          &nbsp;nodes: {{ userStore.nodeStatus.idle }}/{{ userStore.nodeStatus.busy + userStore.nodeStatus.idle }}
+        </div>
+        <div>
+          &nbsp;ocr: {{ userStore.nodeStatus.busy + userStore.nodeStatus.idle }}
+        </div>
         <q-btn @click="userStore.logout" v-if="jwt.isAuthenticated" icon="logout" class="q-ml-md" dense></q-btn>
       </q-toolbar>
     </q-header>

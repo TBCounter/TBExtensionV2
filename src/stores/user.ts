@@ -20,6 +20,9 @@ export const useUser = defineStore('user', () => {
 
   const socket = ref<Socket>()
 
+  const nodeStatus = ref<NodeStatuses>({ idle: 0, busy: 0 })
+  const ocrNodeStatus = ref<NodeStatuses>({ idle: 0, busy: 0 })
+
   function switchLocale() {
     if (userLocale.value === 'en-US') {
       userLocale.value = 'ru-RU'
@@ -77,6 +80,8 @@ export const useUser = defineStore('user', () => {
 
     socket.value.on('user_payload', (payload: {user_accounts: Account[], user_nodes: NodeStatuses, user_ocr_nodes: NodeStatuses})=>{
       accounts.value = payload.user_accounts
+      nodeStatus.value = payload.user_nodes
+      ocrNodeStatus.value = payload.user_ocr_nodes
     })
 
 
@@ -84,5 +89,5 @@ export const useUser = defineStore('user', () => {
 
 
 
-  return { logout, fillUserInfo, accounts, userLocale, switchLocale };
+  return { logout, fillUserInfo, accounts, userLocale, switchLocale, nodeStatus, ocrNodeStatus };
 });
