@@ -1,6 +1,12 @@
 <template>
   <q-page>
-    <q-card class="q-pa-md shadow-2" bordered>
+    <div class="q-pa-md q-gutter-sm">
+      <q-breadcrumbs>
+        <q-breadcrumbs-el icon="home" to="/" />
+        <q-breadcrumbs-el :label="$t('account.new')" icon="person" />
+      </q-breadcrumbs>
+    </div>
+    <q-card class="q-pa-sm shadow-2" bordered>
       <q-card-section class="text-center">
         <div class="text-grey-9 text-h5 text-weight-bold">{{ $t('account.new') }}</div>
         <div class="text-grey-8">{{ $t('account.newDescription') }}</div>

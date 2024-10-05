@@ -1,5 +1,10 @@
 <template>
   <q-page>
+    <div class="q-pa-md q-gutter-sm">
+      <q-breadcrumbs>
+        <q-breadcrumbs-el icon="home" />
+      </q-breadcrumbs>
+    </div>
     <q-item @click="$router.push({ name: 'new' })" class="full-width" clickable v-ripple>
       {{ $t('account.new') }}
     </q-item>

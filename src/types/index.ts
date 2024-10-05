@@ -7,7 +7,7 @@ export type Token = {
 export type Account = {
   name: string;
   clan: string;
-  id: number;
+  id: string;
   is_locked: boolean;
   avatar: string;
   chest_count: number;
@@ -20,7 +20,7 @@ export type Chest = {
   chest_name: string;
   chest_type: string;
   got_at: string;
-  id: number;
+  id: string;
   opened_in: string;
   path: string;
   player: string;

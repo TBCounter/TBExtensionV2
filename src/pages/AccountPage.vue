@@ -1,10 +1,13 @@
 <template>
-  <q-page class="column items-center">
-    <h4 class="q-ma-md">
-      {{ userStore.accounts?.find(el => el.id === parseInt($route.params.id as string))?.name }}
-    </h4>
-    <div>
-      <q-btn @click="runCookiesAccount"> Start counting! </q-btn>
+  <q-page>
+    <div class="q-pa-md q-gutter-sm">
+      <q-breadcrumbs>
+        <q-breadcrumbs-el icon="home" to="/" />
+        <q-breadcrumbs-el :label="accountInfo?.name" icon="person" />
+      </q-breadcrumbs>
+    </div>
+    <div class="row justify-center">
+      <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
     </div>
   </q-page>
 </template>
@@ -13,10 +16,15 @@ import { useGrabCookies } from '../utils'
 import { useUser } from 'src/stores/user';
 import { runAccount } from '../api'
 import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
 const userStore = useUser()
 const cookies = useGrabCookies()
 const route = useRoute()
+
+const accountInfo = computed(() => {
+  return userStore.accounts?.find((el) => el.id === route.params.id)
+})
 
 async function runCookiesAccount() {
   cookies.grabCookies()

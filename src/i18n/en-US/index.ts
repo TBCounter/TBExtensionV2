@@ -4,7 +4,8 @@
 export default {
   contact: 'Contact with developer: ',
   error: {
-    unknown: 'Something went wrong, please try later'
+    unknown: 'Something went wrong, please try later',
+    page404: 'Oops. Nothing here...'
   },
   login: {
     signIn: 'Sign in',
@@ -26,6 +27,7 @@ export default {
     newDescription: 'Collected chests will be stored on your account. Corresponds to the account in the game.',
     name: 'Account name',
     required: 'Field is required',
-    create: 'Create'
+    create: 'Create',
+    start: 'Start counting!'
   }
 };
