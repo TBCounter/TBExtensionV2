@@ -272,6 +272,14 @@
     "@types/filesystem" "*"
     "@types/har-format" "*"
 
+"@types/chrome@^0.0.277":
+  version "0.0.277"
+  resolved "https://registry.yarnpkg.com/@types/chrome/-/chrome-0.0.277.tgz#96a2e29948d390c0aa6d20a0beaae1d343f4a8fb"
+  integrity sha512-qoTgBcDWblSsX+jvFnpUlLUE3LAuOhZfBh9MyMWMQHDsQiYVgBvdZWu9COrdB9+aNnInEyXcFgfc2HE16sdSYQ==
+  dependencies:
+    "@types/filesystem" "*"
+    "@types/har-format" "*"
+
 "@types/compression@^1.7.2":
   version "1.7.5"
   resolved "https://registry.yarnpkg.com/@types/compression/-/compression-1.7.5.tgz#0f80efef6eb031be57b12221c4ba6bc3577808f7"

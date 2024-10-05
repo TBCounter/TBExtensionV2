@@ -28,24 +28,15 @@ declare module '@quasar/app-vite' {
 }
 
 export default bexBackground((bridge /* , allActiveConnections */) => {
-  bridge.on('log', ({ data, respond }) => {
-    console.log(`[BEX] ${data.message}`, ...(data.data || []));
-    respond();
-  });
-
-  bridge.on('getTime', ({ respond }) => {
-    respond(Date.now());
-  });
-
   bridge.on('storage.get', ({ data, respond }) => {
     const { key } = data;
     if (key === null) {
-      chrome.storage.local.get(null, (items) => {
+      chrome.storage.sync.get(null, (items) => {
         // Group the values up into an array to take advantage of the bridge's chunk splitting.
         respond(Object.values(items));
       });
     } else {
-      chrome.storage.local.get([key], (items) => {
+      chrome.storage.sync.get([key], (items) => {
         respond(items[key]);
       });
     }
@@ -54,38 +45,22 @@ export default bexBackground((bridge /* , allActiveConnections */) => {
   // const { data } = await bridge.send('storage.get', { key: 'someKey' })
 
   bridge.on('storage.set', ({ data, respond }) => {
-    chrome.storage.local.set({ [data.key]: data.value }, () => {
+    chrome.storage.sync.set({ [data.key]: data.value }, () => {
       respond();
     });
   });
   // Usage:
   // await bridge.send('storage.set', { key: 'someKey', value: 'someValue' })
 
-  bridge.on('storage.remove', ({ data, respond }) => {
-    chrome.storage.local.remove(data.key, () => {
-      respond();
-    });
+  
+  chrome.sidePanel.setOptions({
+    path: 'www/index.html#/',
+    enabled: true,
   });
-  // Usage:
-  // await bridge.send('storage.remove', { key: 'someKey' })
 
-  /*
-  // EXAMPLES
-  // Listen to a message from the client
-  bridge.on('test', d => {
-    console.log(d)
-  })
-
-  // Send a message to the client based on something happening.
-  chrome.tabs.onCreated.addListener(tab => {
-    bridge.send('browserTabCreated', { tab })
-  })
-
-  // Send a message to the client based on something happening.
-  chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.url) {
-      bridge.send('browserTabUpdated', { tab, changeInfo })
-    }
-  })
-   */
+  chrome.storage.sync.get('sidePanelActive', (items) => {
+    chrome.sidePanel
+      .setPanelBehavior({ openPanelOnActionClick: items['sidePanelActive'] })
+      .catch((error) => console.error(error));
+  });
 });

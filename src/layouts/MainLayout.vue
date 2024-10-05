@@ -26,14 +26,17 @@
 defineOptions({
   name: 'MainLayout'
 });
+import { onMounted } from 'vue';
 import { useJWT } from '../stores/jwt'
 import { useUser } from '../stores/user'
-
 
 const jwt = useJWT()
 const userStore = useUser()
 
-
+onMounted(() => {
+  console.log('user ')
+  userStore.fillUserInfo().catch(userStore.logout)
+})
 </script>
 <style lang="scss" scoped>
 .layout {

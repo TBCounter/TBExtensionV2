@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
       { path: '/account/:id', component: () => import('pages/AccountPage.vue'), name: 'account' }
     ],
   },
+  {
+    path: '/settings',
+    component: ()=> import('pages/SettingsPage.vue'),
+    name: 'bexSettings'
+  },
 
 
   // Always leave this as last one,

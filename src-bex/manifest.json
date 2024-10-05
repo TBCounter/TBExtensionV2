@@ -9,7 +9,9 @@
     "128": "icons/icon-128x128.png"
   },
 
-  "permissions": ["storage", "tabs", "activeTab", "cookies"],
+  "permissions": ["storage", "tabs", "activeTab", "cookies", "sidePanel"],
+
+  "options_page": "www/index.html#/settings",
 
   "host_permissions": ["https://totalbattle.com/*", "*://*/*"],
 
