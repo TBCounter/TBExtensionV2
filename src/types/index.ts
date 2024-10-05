@@ -5,15 +5,27 @@ export type Token = {
 };
 
 export type Account = {
-  name: string;
-  clan: string;
+  avatar?: string;
+  clan?: string;
+  createdAt?: string;
   id: string;
-  is_locked: boolean;
-  avatar: string;
-  chest_count: number;
-  unavailable: boolean;
+  isTriumph?: boolean; // deprecated
+  is_locked?: boolean; // deprecated
+  login: string;
+  name: string;
+  node_url?: string; // deprecated
+  node_urld_id?: string; // deprecated
+  password: string; // unsafe
+  updatedAt: string;
+  userId: string; //same as user id
   vip: boolean;
+
+
+  // chest_count: number;
+  // unavailable: boolean;
 };
+
+export type NodeStatuses = { idle: number, busy: number }
 
 export type Chest = {
   check_needed: null | boolean;

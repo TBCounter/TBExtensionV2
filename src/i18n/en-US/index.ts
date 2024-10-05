@@ -5,12 +5,19 @@ export default {
   contact: 'Contact with developer: ',
   error: {
     unknown: 'Something went wrong, please try later',
-    page404: 'Oops. Nothing here...'
+    page404: 'Oops. Nothing here...',
+  },
+  sockets: {
+    error: {
+      disconnect: 'Server error! Disconnect',
+      conection: "Can't connect to server",
+    },
+    success: 'Connected to the server'
   },
   login: {
     signIn: 'Sign in',
     signInDescription: 'Sign in below to access your account',
-    dontHave: 'Don\'t have an account yet?',
+    dontHave: "Don't have an account yet?",
     signUp: 'Sign up',
     signUpDescription: 'Create an account',
     alreadyHave: 'Already have an account?',
@@ -20,14 +27,15 @@ export default {
     required: 'Field is required',
     dontMatch: 'Passswords don`t match',
     wrong: 'Wrong login or password',
-    success: 'You have been successfuly registered'
+    success: 'You have been successfuly registered',
   },
   account: {
     new: 'Create new account',
-    newDescription: 'Collected chests will be stored on your account. Corresponds to the account in the game.',
+    newDescription:
+      'Collected chests will be stored on your account. Corresponds to the account in the game.',
     name: 'Account name',
     required: 'Field is required',
     create: 'Create',
-    start: 'Start counting!'
-  }
+    start: 'Start counting!',
+  },
 };
