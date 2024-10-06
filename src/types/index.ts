@@ -27,6 +27,12 @@ export type Account = {
 
 export type NodeStatuses = { idle: number, busy: number }
 
+type chestStatus = 'CREATED' | 'UPLOADED' | 'PROCESSING' | 'PROCESSED' | 'ERROR'
+
+export type ChestStatuses = {
+  [key in chestStatus]: number;
+};
+
 export type Chest = {
   check_needed: null | boolean;
   chest_name: string;

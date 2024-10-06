@@ -58,7 +58,7 @@ export const useUser = defineStore('user', () => {
 
     socket.value.on('disconnect', () => {
       console.log(socket.value?.id); // undefined
-      Notify.create({type: 'negative', message:t('sockets.error.disconnect')})
+      Notify.create({type: 'negative', message: t('sockets.error.disconnect')})
     });
 
     socket.value.on('connect_error', (/*error*/) => {
@@ -67,14 +67,14 @@ export const useUser = defineStore('user', () => {
       } else {
         // the connection was denied by the server
         // in that case, `socket.connect()` must be manually called in order to reconnect
-        Notify.create({type: 'negative', message:t('sockets.error.conection')})
+        Notify.create({type: 'negative', message: t('sockets.error.conection')})
       }
     });
 
 
     socket.value.on('user_auth', (payload)=>{
       if(payload === 'success'){
-        Notify.create({type: 'positive', message:t('sockets.success')})
+        Notify.create({type: 'positive', message: t('sockets.success')})
       }
     })
 

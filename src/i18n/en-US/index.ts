@@ -14,6 +14,13 @@ export default {
     },
     success: 'Connected to the server'
   },
+  status: {
+    CREATED: 'Opened',
+    ERROR: 'Error',
+    PROCESSED: 'Done',
+    PROCESSING: 'Reading',
+    UPLOADED: 'Uploaded'
+  },
   login: {
     signIn: 'Sign in',
     signInDescription: 'Sign in below to access your account',

@@ -9,6 +9,10 @@
     <div class="row justify-center">
       <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
     </div>
+    <div>
+      <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
+      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock"></CounterBar>
+    </div>
   </q-page>
 </template>
 <script setup lang="ts">
@@ -17,6 +21,19 @@ import { useUser } from 'src/stores/user';
 import { runAccount } from '../api'
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { ChestStatuses } from 'src/types';
+
+import CounterBar from 'src/components/CounterBar.vue';
+import CounterDescription from 'src/components/CounterDescription.vue';
+
+
+const chestStatusesMock = {
+  CREATED: 2,
+  ERROR: 3,
+  PROCESSED: 3,
+  PROCESSING: 1,
+  UPLOADED: 10,
+} as ChestStatuses
 
 const userStore = useUser()
 const cookies = useGrabCookies()

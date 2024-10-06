@@ -14,6 +14,13 @@ export default {
     },
     success: 'Подключен к серверу'
   },
+  status: {
+    CREATED: 'Открыт',
+    ERROR: 'Ошибка',
+    PROCESSED: 'Готово',
+    PROCESSING: 'Читаем',
+    UPLOADED: 'Загружен'
+  },
   login: {
     signIn: 'Войти',
     signInDescription: 'Войдите, чтобы получить доступ к своей учетной записи',
