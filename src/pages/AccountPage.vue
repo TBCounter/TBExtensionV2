@@ -9,9 +9,15 @@
     <div class="row justify-center">
       <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
     </div>
+    <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
     <div>
-      <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
-      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock"></CounterBar>
+      Current run
+      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock" />
+    </div>
+
+    <div>
+      Previous runs
+      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock" />
     </div>
   </q-page>
 </template>

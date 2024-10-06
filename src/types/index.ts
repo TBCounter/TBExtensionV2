@@ -20,14 +20,20 @@ export type Account = {
   userId: string; //same as user id
   vip: boolean;
 
+  session?: ChestStatuses;
 
   // chest_count: number;
   // unavailable: boolean;
 };
 
-export type NodeStatuses = { idle: number, busy: number }
+export type NodeStatuses = { idle: number; busy: number };
 
-type chestStatus = 'CREATED' | 'UPLOADED' | 'PROCESSING' | 'PROCESSED' | 'ERROR'
+type chestStatus =
+  | 'CREATED'
+  | 'UPLOADED'
+  | 'PROCESSING'
+  | 'PROCESSED'
+  | 'ERROR';
 
 export type ChestStatuses = {
   [key in chestStatus]: number;
@@ -44,6 +50,12 @@ export type Chest = {
   player: string;
 };
 
+export type SocketUserPayload = {
+  user_accounts: Account[];
+  user_nodes: NodeStatuses;
+  user_ocr_nodes: NodeStatuses;
+};
+
 export type TimePickerType = {
   account_id: number;
   from: string;
@@ -57,13 +69,13 @@ export interface ILoginCreds {
   password: string;
 }
 export type CookieData = {
-  cookieyesID: string,
-  log_cookie: string,
-  PTBHSSID: string
-}
+  cookieyesID: string;
+  log_cookie: string;
+  PTBHSSID: string;
+};
 
 export interface IStartCookiePayload {
-  accountId: string,
-  cookie: CookieData,
-  url: string
+  accountId: string;
+  cookie: CookieData;
+  url: string;
 }
