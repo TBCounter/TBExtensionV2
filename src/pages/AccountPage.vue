@@ -12,7 +12,23 @@
     <div class="row justify-center">
       <q-btn :disabled="accountInfo?.logs?.length || !userStore.nodeStatus.idle" @click="runCookiesAccount"> {{
         $t('account.start') }} </q-btn>
-      <q-btn @click="downloadChests">download</q-btn>
+      <q-btn @click="isSelectDatesForChestsDialogOpened = true">download</q-btn>
+      <q-dialog v-model="isSelectDatesForChestsDialogOpened">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Select dates</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-date v-model="selectDatesForChests.from" />
+            <q-date v-model="selectDatesForChests.to"  />
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn flat label="OK" @click="downloadChests" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
 
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
@@ -55,6 +71,12 @@ import CounterDescription from 'src/components/CounterDescription.vue';
 
 const prevStatuses = ref<SessionStatus[]>([])
 
+const isSelectDatesForChestsDialogOpened = ref(false)
+
+const selectDatesForChests = ref({
+  from: undefined,
+  to: undefined,
+})
 const chestStatusesMock = {
   CREATED: 0,
   ERROR: 0,
@@ -78,7 +100,7 @@ async function runCookiesAccount() {
 
 
 async function downloadChests() {
-  await getChests(route.params.id as string, '2024-10-07T13:24:05.245Z', '2024-10-07T15:24:05.245Z')
+  await getChests(route.params.id as string, selectDatesForChests.value.from, selectDatesForChests.value.to)
 }
 
 onMounted(async () => {

@@ -35,8 +35,8 @@ export function getSessions(accountId: string) {
 
 export function getChests(
   accountId: string,
-  startDate: string,
-  endDate: string
+  startDate?: string,
+  endDate?: string
 ) {
   return api
     .get('/chest/', {
