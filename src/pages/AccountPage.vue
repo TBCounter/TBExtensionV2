@@ -92,10 +92,16 @@
           <div class="text-subtitle2">{{ $t('account.areUSubSure') }}</div>
         </q-card-section>
         <q-card-section>
-          {{ deletingSession?.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR') }}
+          <q-badge class="q-ml-md" :color="deletingSession?.status === 'DONE' ? 'positive' : 'negative'">
+            {{ deletingSession?.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR') }}
+          </q-badge>
         </q-card-section>
-        <q-card-section v-if="deletingSession">
+        <q-card-section v-if="deletingSession && deletingWhole">
+          {{ $t('account.deleteForever') }}
           <CounterBar class="q-ma-md q-mt-sm" :chest-statuses="deletingSession?.chestStatusCounts" />
+        </q-card-section>
+        <q-card-section v-else>
+          {{ $t('account.deleteSoft') }}
         </q-card-section>
 
         <q-card-actions align="right">
