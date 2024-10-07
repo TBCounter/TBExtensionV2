@@ -39,6 +39,14 @@ export type ChestStatuses = {
   [key in chestStatus]: number;
 };
 
+export type SessionStatus = {
+  _id: string;
+  session_id: string;
+  start_time: string;
+  status: 'DONE' | 'ERROR' | 'ACTIVE';
+  chestStatusCounts: ChestStatuses;
+};
+
 export type Chest = {
   check_needed: null | boolean;
   chest_name: string;

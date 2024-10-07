@@ -1,15 +1,14 @@
 import { api } from 'src/boot/axios';
-import { ILoginCreds, IStartCookiePayload } from '../types'
-
+import { ILoginCreds, IStartCookiePayload } from '../types';
 
 export function loginPost(payload: ILoginCreds) {
-  process.env.API_URL
-  return api.post('auth/login', payload)
+  process.env.API_URL;
+  return api.post('auth/login', payload);
 }
 
 export function registerPost(payload: ILoginCreds) {
-  process.env.API_URL
-  return api.post('auth/register', payload)
+  process.env.API_URL;
+  return api.post('auth/register', payload);
 }
 
 export function getAccounts() {
@@ -21,5 +20,13 @@ export function createAccountPost(name: string) {
 }
 
 export function runAccount(payload: IStartCookiePayload) {
-  return api.post('/accounts/cookie', payload)
+  return api.post('/accounts/cookie', payload);
+}
+
+export function getSessions(accountId: string) {
+  return api.get('/sessions/', {
+    params: {
+      accountId,
+    },
+  });
 }

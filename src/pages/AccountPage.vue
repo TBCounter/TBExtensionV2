@@ -10,35 +10,39 @@
       <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
     </div>
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
-    <div>
+    <div v-if="accountInfo?.session && Object.keys(accountInfo.session).length > 0">
       Current run
-      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock" />
+      <CounterBar class="q-ma-md" :chest-statuses="accountInfo.session" />
     </div>
 
     <div>
       Previous runs
-      <CounterBar class="q-ma-md" :chest-statuses="chestStatusesMock" />
+      <div v-for="status in prevStatuses" :key="status._id">
+
+        <CounterBar class="q-ma-md" :chest-statuses="status.chestStatusCounts" />
+      </div>
     </div>
   </q-page>
 </template>
 <script setup lang="ts">
 import { useGrabCookies } from '../utils'
 import { useUser } from 'src/stores/user';
-import { runAccount } from '../api'
+import { getSessions, runAccount } from '../api'
 import { useRoute } from 'vue-router';
-import { computed } from 'vue';
-import { ChestStatuses } from 'src/types';
+import { computed, onMounted, ref } from 'vue';
+import { ChestStatuses, SessionStatus } from 'src/types';
 
 import CounterBar from 'src/components/CounterBar.vue';
 import CounterDescription from 'src/components/CounterDescription.vue';
 
+const prevStatuses = ref<SessionStatus[]>([])
 
 const chestStatusesMock = {
-  CREATED: 2,
-  ERROR: 3,
-  PROCESSED: 3,
-  PROCESSING: 1,
-  UPLOADED: 10,
+  CREATED: 0,
+  ERROR: 0,
+  PROCESSED: 0,
+  PROCESSING: 0,
+  UPLOADED: 0,
 } as ChestStatuses
 
 const userStore = useUser()
@@ -53,5 +57,13 @@ async function runCookiesAccount() {
   cookies.grabCookies()
   await runAccount({ accountId: route.params.id as string, url: 'https://totalbattle.com/', cookie: cookies.cookiesData.value })
 }
+
+
+onMounted(async () => {
+  await getSessions(route.params.id as string).then((response) => {
+    prevStatuses.value = response.data
+
+  })
+})
 
 </script>

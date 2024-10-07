@@ -1,9 +1,12 @@
 <template>
-  <div class="row bar">
+  <div class="row bar" v-if="totalChests">
     <div :style="`width: ${calcWidth(value)};`" v-for="(value, key) in chestStatuses"
       :class="['bar--' + key, 'bar-inner row justify-center items-center']" :key="key">
-      {{ value }}
+      {{ value > 0 ? value : '' }}
     </div>
+  </div>
+  <div class="row bar" v-else>
+    <div style="width: 100%; background: gray;" class="bar-inner row justify-center items-center">no data</div>
   </div>
 </template>
 
