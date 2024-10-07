@@ -8,6 +8,7 @@
     </div>
     <div class="row justify-center">
       <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
+      <q-btn @click="downloadChests">download</q-btn>
     </div>
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
     <div v-if="accountInfo?.session && Object.keys(accountInfo.session).length > 0">
@@ -38,9 +39,9 @@
 <script setup lang="ts">
 import { useGrabCookies } from '../utils'
 import { useUser } from 'src/stores/user';
-import { getSessions, runAccount } from '../api'
+import { getChests, getSessions, runAccount } from '../api'
 import { useRoute } from 'vue-router';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { ChestStatuses, SessionStatus } from 'src/types';
 
 import CounterBar from 'src/components/CounterBar.vue';
@@ -70,7 +71,18 @@ async function runCookiesAccount() {
 }
 
 
+async function downloadChests() {
+  await getChests(route.params.id as string, '2024-10-07T13:24:05.245Z', '2024-10-07T15:24:05.245Z')
+}
+
 onMounted(async () => {
+  await getSessions(route.params.id as string).then((response) => {
+    prevStatuses.value = response.data
+
+  })
+})
+
+watch(() => userStore.nodeStatus, async () => {
   await getSessions(route.params.id as string).then((response) => {
     prevStatuses.value = response.data
 

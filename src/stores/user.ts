@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useJWT } from './jwt';
 import { ref } from 'vue';
-import { Account, NodeStatuses, SocketUserPayload } from 'src/types';
+import { Account, NodeStatuses } from 'src/types';
 import { useStorage } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { io, Socket } from 'socket.io-client';
@@ -80,13 +80,16 @@ export const useUser = defineStore('user', () => {
       }
     });
 
-    socket.value.on('user_payload', (payload: SocketUserPayload) => {
-      accounts.value = payload.user_accounts;
+    socket.value.on('user_payload', (payload: Account[]) => {
+      accounts.value = payload;
+    });
+
+    socket.value.on('nodes_update', (payload) => {
       nodeStatus.value = payload.user_nodes;
       ocrNodeStatus.value = payload.user_ocr_nodes;
-      
     });
   }
+
 
   return {
     logout,

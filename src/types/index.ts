@@ -58,12 +58,6 @@ export type Chest = {
   player: string;
 };
 
-export type SocketUserPayload = {
-  user_accounts: Account[];
-  user_nodes: NodeStatuses;
-  user_ocr_nodes: NodeStatuses;
-};
-
 export type TimePickerType = {
   account_id: number;
   from: string;
