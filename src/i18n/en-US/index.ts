@@ -48,5 +48,10 @@ export default {
     selectDates: 'Select dates',
     currentRun: 'Current run:',
     previousRun: 'Previous run:',
+    noData: 'No data',
+    deleteForever: 'Delete with chests',
+    deleteSoft: 'Delete session only',
+    areUSure: 'Are you sure you want to delete this session?',
+    areUSubSure: 'This action can`t be undone!',
   },
 };

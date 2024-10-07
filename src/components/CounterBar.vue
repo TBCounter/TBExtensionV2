@@ -6,7 +6,8 @@
     </div>
   </div>
   <div class="row bar" v-else>
-    <div style="width: 100%; background: gray;" class="bar-inner row justify-center items-center">no data</div>
+    <div style="width: 100%; background: gray;" class="bar-inner row justify-center items-center">
+      {{ $t('account.noData') }}</div>
   </div>
 </template>
 

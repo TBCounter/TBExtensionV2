@@ -13,23 +13,7 @@
       <q-btn :disabled="accountInfo?.logs?.length || !userStore.nodeStatus.idle" @click="runCookiesAccount"> {{
         $t('account.start') }} </q-btn>
       <q-btn class="q-ml-md" @click="isSelectDatesForChestsDialogOpened = true">{{ $t('account.download') }}</q-btn>
-      <q-dialog seamless v-model="isSelectDatesForChestsDialogOpened">
-        <q-card>
-          <q-card-section>
-            <div class="text-h6">{{ $t('account.selectDates') }}</div>
-            <q-space />
-            <q-btn icon="close" flat round dense v-close-popup />
-          </q-card-section>
 
-          <q-card-section class="q-pa-none">
-            <q-date minimal v-model="selectDatesForChests" range />
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn flat label="OK" @click="downloadChests" color="primary" v-close-popup />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
     </div>
 
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
@@ -45,24 +29,88 @@
         :items="prevStatuses.sort((a, b) => +new Date(b.start_time) - +new Date(a.start_time))" separator
         v-slot="{ item }">
 
-        <div :key="item._id">
-          <q-badge class="q-ml-md" color="blue" outline>
-            {{ new Date(item.start_time).toLocaleString() }}
-          </q-badge>
-          <q-badge class="q-ml-md" :color="item.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR')">
-            {{ item.status }}
-          </q-badge>
-
+        <div class="q-py-sm" :key="item._id">
+          <div class="row items-center">
+            <div>
+              <q-badge class="q-ml-md" color="blue" outline>
+                {{ new Date(item.start_time).toLocaleString() }}
+              </q-badge>
+              <q-badge class="q-ml-md" :color="item.status === 'DONE' ? 'positive' : 'negative'">
+                {{ item.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR') }}
+              </q-badge>
+            </div>
+            <q-space />
+            <q-btn size="small" @click="getChestBySession(item.session_id)" flat round color="positive"
+              icon="file_download" />
+            <q-btn size="small" flat round color="negative" icon="delete_forever">
+              <q-menu>
+                <q-list style="min-width: 100px">
+                  <q-item clickable
+                    @click="deletingSession = item; deletingWhole = false; isSureDeleteDialogOpen = true" v-close-popup>
+                    <q-item-section>{{ $t("account.deleteSoft") }}</q-item-section>
+                  </q-item>
+                  <q-item class="bg-negative text-white" clickable
+                    @click="deletingSession = item; deletingWhole = true; isSureDeleteDialogOpen = true" v-close-popup>
+                    <q-item-section> {{ $t("account.deleteForever") }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
+          </div>
           <CounterBar class="q-ma-md q-mt-sm" :chest-statuses="item.chestStatusCounts" />
+          <q-separator />
         </div>
       </q-virtual-scroll>
     </div>
+
+
+    <q-dialog seamless v-model="isSelectDatesForChestsDialogOpened">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">{{ $t('account.selectDates') }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section class="q-pa-none">
+          <q-date minimal v-model="selectDatesForChests" range />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" @click="downloadChests" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog seamless v-model="isSureDeleteDialogOpen">
+      <q-card>
+        <q-card-section>
+          <div class="text-subtitle1">{{ $t('account.areUSure') }}</div>
+        </q-card-section>
+
+        <q-card-section class="q-py-none">
+          <div class="text-subtitle2">{{ $t('account.areUSubSure') }}</div>
+        </q-card-section>
+        <q-card-section>
+          {{ deletingSession?.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR') }}
+        </q-card-section>
+        <q-card-section v-if="deletingSession">
+          <CounterBar class="q-ma-md q-mt-sm" :chest-statuses="deletingSession?.chestStatusCounts" />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" @click="deleteSession(deletingSession?.session_id, deletingWhole)" color="negative"
+            v-close-popup />
+          <q-btn flat label="Отмена" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script setup lang="ts">
 import { useGrabCookies } from '../utils'
 import { useUser } from 'src/stores/user';
-import { getChests, getSessions, runAccount } from '../api'
+import { deleteSession, getChestBySession, getChests, getSessions, runAccount } from '../api'
 import { useRoute } from 'vue-router';
 import { computed, onMounted, ref, watch } from 'vue';
 import { ChestStatuses, SessionStatus } from 'src/types';
@@ -73,6 +121,10 @@ import CounterDescription from 'src/components/CounterDescription.vue';
 const prevStatuses = ref<SessionStatus[]>([])
 
 const isSelectDatesForChestsDialogOpened = ref(false)
+const isSureDeleteDialogOpen = ref(false)
+
+const deletingSession = ref<SessionStatus>()
+const deletingWhole = ref(false)
 
 const selectDatesForChests = ref({
   from: undefined,

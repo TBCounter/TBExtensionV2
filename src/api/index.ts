@@ -33,12 +33,12 @@ export function getSessions(accountId: string) {
   });
 }
 
-export function getChests(
+export async function getChests(
   accountId: string,
   startDate?: string,
   endDate?: string
 ) {
-  return api
+  await api
     .get('/chest/', {
       params: {
         accountId,
@@ -59,4 +59,36 @@ export function getChests(
     .catch((error) => {
       console.error('Error while downloading the file:', error);
     });
+}
+
+export async function getChestBySession(sessionId: string) {
+  await api
+    .get('/chest/session', {
+      params: {
+        sessionId,
+      },
+      responseType: 'blob', // Указываем, что ожидается файл (BLOB)
+    })
+    .then((response) => {
+      // Создаем Blob из данных ответа
+      const blob = new Blob([response.data], {
+        type: 'text/csv;charset=utf-8;',
+      });
+
+      // Скачиваем файл с помощью file-saver
+      saveAs(blob, `chests_${sessionId}.csv`);
+    })
+    .catch((error) => {
+      console.error('Error while downloading the file:', error);
+    });
+}
+
+export function deleteSession(session_id?: string, whole?: boolean) {
+  if (!session_id || whole) return;
+  return api.delete('/sessions', {
+    params: {
+      whole,
+      session_id,
+    },
+  });
 }

@@ -48,5 +48,10 @@ export default {
     selectDates: 'Выберите даты',
     currentRun: 'Сейчас считаем:',
     previousRun: 'Ранее:',
+    noData: 'Нет данных',
+    deleteForever: 'Удалить вместе с сундуками',
+    deleteSoft: 'Удалить только сессию',
+    areUSure: 'Вы уверены, что хотите удалить сессию?',
+    areUSubSure: 'Это действие необратимо!',
   },
 };
