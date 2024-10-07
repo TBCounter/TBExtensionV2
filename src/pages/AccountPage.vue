@@ -11,16 +11,27 @@
     </div>
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
     <div v-if="accountInfo?.session && Object.keys(accountInfo.session).length > 0">
-      Current run
+      <div class="q-ml-md q-mb-lg">Current run:</div>
       <CounterBar class="q-ma-md" :chest-statuses="accountInfo.session" />
     </div>
 
     <div>
-      Previous runs
-      <div v-for="status in prevStatuses" :key="status._id">
+      <div class="q-ml-md q-mb-lg">Previous runs:</div>
+      <q-virtual-scroll style="max-height: 300px;"
+        :items="prevStatuses.sort((a, b) => +new Date(b.start_time) - +new Date(a.start_time))" separator
+        v-slot="{ item }">
 
-        <CounterBar class="q-ma-md" :chest-statuses="status.chestStatusCounts" />
-      </div>
+        <div :key="item._id">
+          <q-badge class="q-ml-md" color="blue" outline>
+            {{ new Date(item.start_time).toLocaleString() }}
+          </q-badge>
+          <q-badge class="q-ml-md" :color="item.status === 'DONE' ? 'positive' : 'negative'">
+            {{ item.status }}
+          </q-badge>
+
+          <CounterBar class="q-ma-md q-mt-sm" :chest-statuses="item.chestStatusCounts" />
+        </div>
+      </q-virtual-scroll>
     </div>
   </q-page>
 </template>
