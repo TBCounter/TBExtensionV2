@@ -4,14 +4,20 @@
       <q-breadcrumbs>
         <q-breadcrumbs-el icon="home" to="/" />
         <q-breadcrumbs-el :label="accountInfo?.name" icon="person" />
+        <q-badge class="q-ml-lg" v-if="accountInfo?.logs?.length">
+          {{ accountInfo.logs.at(-1)?.message }}
+        </q-badge>
       </q-breadcrumbs>
     </div>
     <div class="row justify-center">
-      <q-btn @click="runCookiesAccount"> {{ $t('account.start') }} </q-btn>
+      <q-btn :disabled="accountInfo?.logs?.length || !userStore.nodeStatus.idle" @click="runCookiesAccount"> {{
+        $t('account.start') }} </q-btn>
       <q-btn @click="downloadChests">download</q-btn>
     </div>
+
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
-    <div v-if="accountInfo?.session && Object.keys(accountInfo.session).length > 0">
+
+    <div v-if="(accountInfo?.session && Object.keys(accountInfo.session).length > 0)">
       <div class="q-ml-md q-mb-lg">Current run:</div>
       <CounterBar class="q-ma-md" :chest-statuses="accountInfo.session" />
     </div>

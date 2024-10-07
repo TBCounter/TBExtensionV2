@@ -20,6 +20,11 @@ export type Account = {
   userId: string; //same as user id
   vip: boolean;
 
+  logs?: Array<{
+    message: string;
+    timestamp: string;
+    _id: string;
+  }>;
   session?: ChestStatuses;
 
   // chest_count: number;
