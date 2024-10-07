@@ -11,7 +11,7 @@
           &nbsp;nodes: {{ userStore.nodeStatus.idle }}/{{ userStore.nodeStatus.busy + userStore.nodeStatus.idle }}
         </div>
         <div>
-          &nbsp;ocr: {{ userStore.nodeStatus.busy + userStore.nodeStatus.idle }}
+          &nbsp;ocr: {{ userStore.ocrNodeStatus.busy + userStore.ocrNodeStatus.idle }}
         </div>
         <q-btn @click="userStore.logout" v-if="jwt.isAuthenticated" icon="logout" class="q-ml-md" dense></q-btn>
       </q-toolbar>
