@@ -12,14 +12,14 @@ export default {
       disconnect: 'Ошибка сервера, отключен.',
       conection: 'Невозможно подключиться к серверу',
     },
-    success: 'Подключен к серверу'
+    success: 'Подключен к серверу',
   },
   status: {
     CREATED: 'Открыт',
     ERROR: 'Ошибка',
     PROCESSED: 'Готово',
     PROCESSING: 'Читаем',
-    UPLOADED: 'Загружен'
+    UPLOADED: 'Загружен',
   },
   login: {
     signIn: 'Войти',
@@ -44,5 +44,9 @@ export default {
     required: 'Поле обязательно',
     create: 'Создать',
     start: 'Начать расчёт!',
+    download: 'Скачать',
+    selectDates: 'Выберите даты',
+    currentRun: 'Сейчас считаем:',
+    previousRun: 'Ранее:',
   },
 };

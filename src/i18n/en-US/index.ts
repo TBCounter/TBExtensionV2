@@ -12,14 +12,14 @@ export default {
       disconnect: 'Server error! Disconnect',
       conection: "Can't connect to server",
     },
-    success: 'Connected to the server'
+    success: 'Connected to the server',
   },
   status: {
     CREATED: 'Opened',
     ERROR: 'Error',
     PROCESSED: 'Done',
     PROCESSING: 'Reading',
-    UPLOADED: 'Uploaded'
+    UPLOADED: 'Uploaded',
   },
   login: {
     signIn: 'Sign in',
@@ -44,5 +44,9 @@ export default {
     required: 'Field is required',
     create: 'Create',
     start: 'Start counting!',
+    download: 'Download',
+    selectDates: 'Select dates',
+    currentRun: 'Current run:',
+    previousRun: 'Previous run:',
   },
 };

@@ -12,16 +12,17 @@
     <div class="row justify-center">
       <q-btn :disabled="accountInfo?.logs?.length || !userStore.nodeStatus.idle" @click="runCookiesAccount"> {{
         $t('account.start') }} </q-btn>
-      <q-btn @click="isSelectDatesForChestsDialogOpened = true">download</q-btn>
-      <q-dialog v-model="isSelectDatesForChestsDialogOpened">
+      <q-btn class="q-ml-md" @click="isSelectDatesForChestsDialogOpened = true">{{ $t('account.download') }}</q-btn>
+      <q-dialog seamless v-model="isSelectDatesForChestsDialogOpened">
         <q-card>
           <q-card-section>
-            <div class="text-h6">Select dates</div>
+            <div class="text-h6">{{ $t('account.selectDates') }}</div>
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
           </q-card-section>
 
-          <q-card-section class="q-pt-none">
-            <q-date v-model="selectDatesForChests.from" />
-            <q-date v-model="selectDatesForChests.to"  />
+          <q-card-section class="q-pa-none">
+            <q-date minimal v-model="selectDatesForChests" range />
           </q-card-section>
 
           <q-card-actions align="right">
@@ -34,12 +35,12 @@
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
 
     <div v-if="(accountInfo?.session && Object.keys(accountInfo.session).length > 0)">
-      <div class="q-ml-md q-mb-lg">Current run:</div>
+      <div class="q-ml-md q-mb-lg">{{ $t('account.currentRun') }}</div>
       <CounterBar class="q-ma-md" :chest-statuses="accountInfo.session" />
     </div>
 
     <div>
-      <div class="q-ml-md q-mb-lg">Previous runs:</div>
+      <div class="q-ml-md q-mb-lg">{{ $t('account.previousRun') }}</div>
       <q-virtual-scroll style="max-height: 300px;"
         :items="prevStatuses.sort((a, b) => +new Date(b.start_time) - +new Date(a.start_time))" separator
         v-slot="{ item }">
@@ -48,7 +49,7 @@
           <q-badge class="q-ml-md" color="blue" outline>
             {{ new Date(item.start_time).toLocaleString() }}
           </q-badge>
-          <q-badge class="q-ml-md" :color="item.status === 'DONE' ? 'positive' : 'negative'">
+          <q-badge class="q-ml-md" :color="item.status === 'DONE' ? $t('status.PROCESSED') : $t('status.ERROR')">
             {{ item.status }}
           </q-badge>
 
