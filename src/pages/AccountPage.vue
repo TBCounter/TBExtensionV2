@@ -9,6 +9,11 @@
         </q-badge>
       </q-breadcrumbs>
     </div>
+    <div class="q-mx-md q-mb-sm">
+      <q-toggle v-model="runWithOpen" :label="$t('account.runWithOpen')"> <q-tooltip>
+          {{ $t('account.chestTooltip') }}
+        </q-tooltip></q-toggle>
+    </div>
     <div class="row justify-center">
       <q-btn :disabled="accountInfo?.logs?.length || !userStore.nodeStatus.idle" @click="runCookiesAccount"> {{
         $t('account.start') }} </q-btn>
@@ -19,12 +24,12 @@
     <CounterDescription class="q-ma-md" :chest-statuses="chestStatusesMock" />
 
     <div v-if="(accountInfo?.session && Object.keys(accountInfo.session).length > 0)">
-      <div class="q-ml-md q-mb-lg">{{ $t('account.currentRun') }}</div>
+      <div class="q-ml-md q-mb-md">{{ $t('account.currentRun') }}</div>
       <CounterBar class="q-ma-md" :chest-statuses="accountInfo.session" />
     </div>
 
     <div>
-      <div class="q-ml-md q-mb-lg">{{ $t('account.previousRun') }}</div>
+      <div class="q-ml-md q-mb-md">{{ $t('account.previousRun') }}</div>
       <q-virtual-scroll style="max-height: 300px;"
         :items="prevStatuses.sort((a, b) => +new Date(b.start_time) - +new Date(a.start_time))" separator
         v-slot="{ item }">
@@ -66,7 +71,7 @@
 
     <q-dialog seamless v-model="isSelectDatesForChestsDialogOpened">
       <q-card>
-        <q-card-section>
+        <q-card-section class="row">
           <div class="text-h6">{{ $t('account.selectDates') }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
@@ -124,6 +129,8 @@ import { ChestStatuses, SessionStatus } from 'src/types';
 import CounterBar from 'src/components/CounterBar.vue';
 import CounterDescription from 'src/components/CounterDescription.vue';
 
+const runWithOpen = ref(false)
+
 const prevStatuses = ref<SessionStatus[]>([])
 
 const isSelectDatesForChestsDialogOpened = ref(false)
@@ -154,7 +161,7 @@ const accountInfo = computed(() => {
 
 async function runCookiesAccount() {
   cookies.grabCookies()
-  await runAccount({ accountId: route.params.id as string, url: 'https://totalbattle.com/', cookie: cookies.cookiesData.value })
+  await runAccount({ accountId: route.params.id as string, url: 'https://totalbattle.com/', cookie: cookies.cookiesData.value }, runWithOpen.value)
 }
 
 

@@ -21,8 +21,8 @@ export function createAccountPost(name: string) {
   return api.post('/accounts/', { name });
 }
 
-export function runAccount(payload: IStartCookiePayload) {
-  return api.post('/accounts/cookie', payload);
+export function runAccount(payload: IStartCookiePayload, runWithOpen: boolean) {
+  return api.post('/accounts/cookie', { ...payload, open: runWithOpen });
 }
 
 export function getSessions(accountId: string) {

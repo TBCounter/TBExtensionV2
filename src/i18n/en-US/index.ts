@@ -53,5 +53,8 @@ export default {
     deleteSoft: 'Delete session only',
     areUSure: 'Are you sure you want to delete this session?',
     areUSubSure: 'This action can`t be undone!',
+    runWithOpen: 'Open chests',
+    chestTooltip:
+      'You can count the chests without opening them (they will remain in the account)',
   },
 };
