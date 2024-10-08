@@ -105,8 +105,8 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="OK" @click="deleteSession(deletingSession?.session_id, deletingWhole)" color="negative"
-            v-close-popup />
+          <q-btn flat label="OK" @click="deleteSession(deletingSession?.session_id, deletingWhole); reloadSessions()"
+            color="negative" v-close-popup />
           <q-btn flat label="Отмена" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
@@ -162,18 +162,19 @@ async function downloadChests() {
   await getChests(route.params.id as string, selectDatesForChests.value.from, selectDatesForChests.value.to)
 }
 
-onMounted(async () => {
+async function reloadSessions() {
   await getSessions(route.params.id as string).then((response) => {
     prevStatuses.value = response.data
 
   })
+}
+
+onMounted(async () => {
+  await reloadSessions()
 })
 
 watch(() => userStore.nodeStatus, async () => {
-  await getSessions(route.params.id as string).then((response) => {
-    prevStatuses.value = response.data
-
-  })
+  await reloadSessions()
 })
 
 </script>

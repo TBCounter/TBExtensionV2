@@ -83,12 +83,12 @@ export async function getChestBySession(sessionId: string) {
     });
 }
 
-export function deleteSession(session_id?: string, whole?: boolean) {
-  if (!session_id || whole) return;
+export function deleteSession(sessionId?: string, whole?: boolean) {
+  if (!sessionId) return;
   return api.delete('/sessions', {
     params: {
       whole,
-      session_id,
+      sessionId,
     },
   });
 }
