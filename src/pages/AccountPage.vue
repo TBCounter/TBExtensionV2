@@ -125,10 +125,15 @@ import { deleteSession, getChestBySession, getChests, getSessions, runAccount } 
 import { useRoute } from 'vue-router';
 import { computed, onMounted, ref, watch } from 'vue';
 import { ChestStatuses, SessionStatus } from 'src/types';
+import { useQuasar } from 'quasar';
+
+import { useI18n } from 'vue-i18n';
 
 import CounterBar from 'src/components/CounterBar.vue';
 import CounterDescription from 'src/components/CounterDescription.vue';
 
+
+const { t } = useI18n()
 const runWithOpen = ref(false)
 
 const prevStatuses = ref<SessionStatus[]>([])
@@ -138,6 +143,8 @@ const isSureDeleteDialogOpen = ref(false)
 
 const deletingSession = ref<SessionStatus>()
 const deletingWhole = ref(false)
+
+const $q = useQuasar()
 
 const selectDatesForChests = ref({
   from: undefined,
@@ -160,8 +167,14 @@ const accountInfo = computed(() => {
 })
 
 async function runCookiesAccount() {
-  cookies.grabCookies()
-  await runAccount({ accountId: route.params.id as string, url: 'https://totalbattle.com/', cookie: cookies.cookiesData.value }, runWithOpen.value)
+  const cookiesData = await cookies.grabCookies()
+
+  if (!cookiesData.PTBHSSID) {
+    $q.notify({
+      message: t('account.noCookies'),
+    })
+  }
+  await runAccount({ accountId: route.params.id as string, url: 'https://totalbattle.com/', cookie: cookiesData }, runWithOpen.value)
 }
 
 

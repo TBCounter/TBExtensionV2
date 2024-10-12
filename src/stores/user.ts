@@ -7,6 +7,7 @@ import { useStorage } from '@vueuse/core';
 import { useI18n } from 'vue-i18n';
 import { io, Socket } from 'socket.io-client';
 import { Notify } from 'quasar';
+import { getAccounts } from 'src/api';
 
 export const useUser = defineStore('user', () => {
   const router = useRouter();
@@ -34,10 +35,13 @@ export const useUser = defineStore('user', () => {
     jwt.logout();
     router.push('/login');
   }
+
+  async function refillUserInfo() {
+    await getAccounts().then((response) => {
+      accounts.value = response.data.accounts;
+    });
+  }
   async function fillUserInfo() {
-    // await getAccounts().then((response) => {
-    //   accounts.value = response.data.accounts;
-    // });
     connectToServer();
   }
 
@@ -90,7 +94,6 @@ export const useUser = defineStore('user', () => {
     });
   }
 
-
   return {
     logout,
     fillUserInfo,
@@ -99,5 +102,6 @@ export const useUser = defineStore('user', () => {
     switchLocale,
     nodeStatus,
     ocrNodeStatus,
+    refillUserInfo,
   };
 });

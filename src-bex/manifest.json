@@ -2,7 +2,7 @@
   "name": "Count starter V2",
   "description": "Starts chests counting for new TB counter server",
   "manifest_version": 3,
-
+  "version": "0.1.1",
   "icons": {
     "16": "icons/icon-16x16.png",
     "48": "icons/icon-48x48.png",

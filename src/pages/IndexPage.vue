@@ -22,8 +22,8 @@ import { onMounted } from 'vue';
 
 const userStore = useUser()
 
-onMounted(() => {
-  userStore.fillUserInfo()
+onMounted(async () => {
+  await userStore.fillUserInfo()
 })
 
 </script>

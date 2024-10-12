@@ -1,57 +1,50 @@
 import { ref } from 'vue';
 import { CookieData } from 'src/types';
 
-
 export function useGrabCookies() {
   const currentTabID = ref();
   const currentTabURL = ref();
   const cookiesData = ref<CookieData>({
     cookieyesID: '',
     log_cookie: '',
-    PTBHSSID: ''
+    PTBHSSID: '',
   });
 
-  function grabCookies() {
+  async function grabCookies() {
+    // Обернем chrome.tabs.query в промис
+    const tab = await new Promise<chrome.tabs.Tab[]>((resolve) => {
+      chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) =>
+        resolve(tabs)
+      );
+    });
 
-    chrome.tabs.query(
-      {
-        active: true,
-        lastFocusedWindow: true
-      },
-      function (tabs) {
-        currentTabID.value = tabs[0].id;
-        currentTabURL.value = tabs[0].url
+    currentTabID.value = tab[0].id;
+    currentTabURL.value = tab[0].url;
 
-      }
+    // Функция для получения cookie через промис
+    const getCookie = (url: string, name: string) => {
+      return new Promise<chrome.cookies.Cookie | null>((resolve) => {
+        chrome.cookies.get({ url, name }, (cookie) => resolve(cookie));
+      });
+    };
+
+    // Используем await для получения каждого cookie
+    const cookieyesID = await getCookie(
+      'https://totalbattle.com/',
+      'cookieyesID'
     );
+    const log_cookie = await getCookie(
+      'https://totalbattle.com/',
+      'log_cookie'
+    );
+    const PTBHSSID = await getCookie('https://totalbattle.com/', 'PTBHSSID');
 
+    if (cookieyesID) cookiesData.value.cookieyesID = cookieyesID.value;
+    if (log_cookie) cookiesData.value.log_cookie = log_cookie.value;
+    if (PTBHSSID) cookiesData.value.PTBHSSID = PTBHSSID.value;
 
-    chrome.cookies.get({
-      url: 'https://totalbattle.com/',
-      name: 'cookieyesID',
-    }, function (cookie) {
-      if (!cookie) return
-      cookiesData.value['cookieyesID'] = cookie.value
-
-
-    })
-    chrome.cookies.get({
-      url: 'https://totalbattle.com/',
-      name: 'log_cookie',
-    }, (cookie) => {
-      if (!cookie) return
-      cookiesData.value['log_cookie'] = cookie.value
-
-    })
-    chrome.cookies.get({
-      url: 'https://totalbattle.com/',
-      name: 'PTBHSSID',
-    }, (cookie) => {
-      if (!cookie) return
-      cookiesData.value['PTBHSSID'] = cookie.value
-
-    })
-
+    return cookiesData.value;
   }
-  return { grabCookies, cookiesData }
+
+  return { grabCookies, cookiesData };
 }

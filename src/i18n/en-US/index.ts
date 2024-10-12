@@ -56,5 +56,6 @@ export default {
     runWithOpen: 'Open chests',
     chestTooltip:
       'You can count the chests without opening them (they will remain in the account)',
+    noCookies: 'Looks like you don`t have cookies. Trying to run anyways...'
   },
 };

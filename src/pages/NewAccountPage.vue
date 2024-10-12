@@ -26,10 +26,18 @@
 import { ref } from 'vue';
 import { createAccountPost } from '../api'
 import { useRouter } from 'vue-router';
+import { useUser } from 'src/stores/user';
+
 const router = useRouter()
+const userStore = useUser()
 
 const name = ref()
+
 async function createAccount() {
-  await createAccountPost(name.value).then(() => router.push({ name: 'home' }))
+  await createAccountPost(name.value).catch(() => {
+    console.log('cant create account')
+  })
+  await userStore.refillUserInfo()
+  await router.push({ name: 'home' })
 }
 </script>
