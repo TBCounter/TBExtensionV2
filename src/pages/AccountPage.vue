@@ -167,7 +167,12 @@ const accountInfo = computed(() => {
 })
 
 async function runCookiesAccount() {
-  const cookiesData = await cookies.grabCookies()
+  const cookiesData = await cookies.grabCookies().catch(() => {
+    $q.notify({
+      message: t('account.noCookies'),
+    })
+    return { PTBHSSID: '' }
+  })
 
   if (!cookiesData.PTBHSSID) {
     $q.notify({

@@ -18,8 +18,8 @@ export function useGrabCookies() {
       );
     });
 
-    currentTabID.value = tab[0].id;
-    currentTabURL.value = tab[0].url;
+    currentTabID.value = tab[0]?.id;
+    currentTabURL.value = tab[0]?.url;
 
     // Функция для получения cookie через промис
     const getCookie = (url: string, name: string) => {
