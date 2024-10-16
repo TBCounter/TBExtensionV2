@@ -171,7 +171,7 @@ async function runCookiesAccount() {
     $q.notify({
       message: t('account.noCookies'),
     })
-    return { PTBHSSID: '' }
+    return { PTBHSSID: '', log_cookie: '', cookieyesID: '' }
   })
 
   if (!cookiesData.PTBHSSID) {
